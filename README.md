@@ -3,9 +3,10 @@ Sample Blazor Server Solution with IdentityServer and API
 * **Blazor Server Application**
    * Standard Blazor Server template, protected by Identity Server using Authorization Code flow w/PKCE
    * Has protected features to view the User Claim set for the application and api
-      * Users of Identity features require custom claim type **appRole_claim** with value **identity**.
+      * Identity features protected by Authorization policy **CanViewIdentity** from BlazorId_Shared. The policy requires custom claim type **appRole_claim** with value **identity**.
       * **CascadingAuthenticationState** is declared in file App.razor to support UI authorization functions
       * **AuthorizeView** component is used in file NavMenu.razor to show / hide menu options based on authorization state
+   * 
 * **User Claims API** - returns current user claims as Json 
    * Requires IdentityServer client scope **identityApi**
    * Requires user claim type **appRole_claim** with value  **identity**
