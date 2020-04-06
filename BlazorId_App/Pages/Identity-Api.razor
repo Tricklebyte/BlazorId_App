@@ -1,0 +1,27 @@
+﻿@page "/identityapi"
+
+@using BlazorId_App.Data
+@inject IdentityDataService IdentityService
+
+<h1>User Claims from API</h1>
+
+<p>These are the user claims that were presented to the API</p>
+
+
+@if (userClaimsJson == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <pre> @userClaimsJson </pre>
+}
+
+@code {
+    private string userClaimsJson;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userClaimsJson = await IdentityService.GetAPIUserClaimsJson();
+    }
+}
