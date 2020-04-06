@@ -2,7 +2,7 @@
 Sample Blazor Server Solution with IdentityServer and API
 * **Blazor Server Application**
    * Standard Blazor Server template, protected by Identity Server using Authorization Code flow w/PKCE
-   * Protected app features to view the User Claim set for the application and api
+   * Has protected features to view the User Claim set for the application and api
    * Users of Identity features require custom claim type **appRole_claim** with value **identity**.
 * **User Claims API** - returns current user claims as Json 
    * Requires IdentityServer client scope **identityApi**
