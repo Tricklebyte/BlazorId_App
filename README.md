@@ -42,7 +42,7 @@ Sample Blazor Server Solution with IdentityServer and API
       ```
  #### API user claim
  *Additional configuration requirements for the custom user claim to be included in the Access token for the API
-   1.  The API Resource configuration in IdentityServer must include the custom claim type in the api resource's **ClaimTypes**. The following code creates the API resource and assigns the claim type of appUser_claim:
+   1.  The API Resource configuration in IdentityServer must include the custom claim type in the api resource's **ClaimTypes**. The following code creates the API resource and assigns the claim type of **appUser_claim**:
  ```c#
    new ApiResource("identityApi", 
                    "Identity Claims Api", 
