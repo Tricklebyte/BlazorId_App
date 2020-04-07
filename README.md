@@ -13,6 +13,10 @@ Sample Blazor Server Solution with IdentityServer and API
    * Authorization policy from BlazorId_Shared is the same one used by the application.
 * **IdentityServer Demo** 
    * Identity Server samples, quickstart #6 AspNet Identity
-   * Standard IdentityServer Demo project - Alice has been granted the **identity** appRole_claim, Bob has not.
+   * Standard IdentityServer Demo project 
+      * .Net Identity - Users: Alice (privileged), Bob (non-privileged)
+      * Custom Api Resource **identityApi**
+      * Custom Identity Resource **appRole_claim**
+      
  
   
