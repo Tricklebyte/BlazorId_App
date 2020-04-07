@@ -35,8 +35,17 @@ namespace BlazorId_App.Data
             {
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
             }
-            HttpResponseMessage response = await _httpClient.GetAsync($"identity");
-            response.EnsureSuccessStatusCode();
+
+            HttpResponseMessage response = null ;
+            try
+            {
+               response = await _httpClient.GetAsync($"identity");
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException e)
+            {
+                return e.Message;
+            }
             string rawJson = await response.Content.ReadAsStringAsync();
             JToken parsedJson = JToken.Parse(rawJson);
             return  parsedJson.ToString(Formatting.Indented);
