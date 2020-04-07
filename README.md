@@ -41,11 +41,12 @@ Sample Blazor Server Solution with IdentityServer and API
        options.ClaimActions.MapUniqueJsonKey("appUser_claim", "appUser_claim");
       ```
  #### API user claim
- * Required configuration for the custom user claim to be included in the Access token for the API
- 1. The custom claim must have been assigned to the User principal at login
- 2. A custom API Resource must be configured in IdentityServer. The API Resource config must include the claim type in the api resource's **ClaimTypes**. The following code creates the API resource and assigned the claim type of appUser_Claim:
+ *Additional configuration requirements for the custom user claim to be included in the Access token for the API
+   1.  The API Resource configuration in IdentityServer must include the custom claim type in the api resource's **ClaimTypes**. The following code creates the API resource and assigns the claim type of appUser_claim:
  ```c#
    new ApiResource("identityApi", 
-                                "Identity Claims Api", 
-                                 new []{"appUser_claim"})
+                   "Identity Claims Api", 
+                    new []{"appUser_claim"})
  ```
+
+         ```
