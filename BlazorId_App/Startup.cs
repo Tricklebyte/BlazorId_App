@@ -54,10 +54,11 @@ namespace BlazorId_App
                     options.ResponseType = "code";
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
-                    options.Scope.Add("email"); 
+                    options.Scope.Add("email");
+                    options.Scope.Add("offline_access");
 
                     //Scope for accessing API
-                        options.Scope.Add("identityApi"); //invalid scope for client
+                    options.Scope.Add("identityApi"); //invalid scope for client
 
                     // Scope for custom user claim
                          options.Scope.Add("appUser_claim"); //invalid scope for client
@@ -73,6 +74,7 @@ namespace BlazorId_App
 
             services.AddAuthorization(authorizationOptions =>
             {
+                // add authorization poliy from shared project. This is the same policy used by the API
                 authorizationOptions.AddPolicy(
                     BlazorId_Shared.Policies.CanViewIdentity,
                     BlazorId_Shared.Policies.CanViewIdentityPolicy());
