@@ -26,8 +26,7 @@ namespace BlazorId_App.Data
                 throw new System.ArgumentNullException(nameof(httpContextAccessor));
         }
 
-        // Get claims from API
-
+        // Get user claims json from the API get method
         public async Task<string>GetAPIUserClaimsJson()
         {
             var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
@@ -49,9 +48,13 @@ namespace BlazorId_App.Data
             string rawJson = await response.Content.ReadAsStringAsync();
             JToken parsedJson = JToken.Parse(rawJson);
             return  parsedJson.ToString(Formatting.Indented);
-            //return await response.Content.ReadAsStringAsync();
+            
         }
 
+        /// <summary>
+        /// Gets user claims from the current httpcontext
+        /// </summary>
+        /// <returns></returns>
         public async Task<string> GetAPPUserClaimsJson()
         {
             JObject jo;
@@ -68,8 +71,6 @@ namespace BlazorId_App.Data
             {
                 throw (e);
             }
-
-            return jo.ToString(Formatting.Indented);
         }
     }
 }

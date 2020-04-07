@@ -33,16 +33,17 @@ namespace IdentityServerAspNetIdentity
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
-                // machine to machine client
-                new Client
-                {
-                    ClientId = "client",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    // scopes that client has access to
-                    AllowedScopes = { "identityApi" },
-                },
-                // interactive ASP.NET Core MVC client
+                //// machine to machine client
+                //new Client
+                //{
+                //    ClientId = "client",
+                //    ClientSecrets = { new Secret("secret".Sha256()) },
+                //    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                //    // scopes that client has access to
+                //    AllowedScopes = { "identityApi" },
+                //},
+
+                // interactive ASP.NET Core Blazor Server Client
                 new Client
                 {
                     ClientId = "BlazorID_App",
@@ -59,11 +60,10 @@ namespace IdentityServerAspNetIdentity
                     // where to redirect to after logout
                     PostLogoutRedirectUris = { "https://localhost:44321/signout-callback-oidc" },
 
+                    // allowed scopes - include Api Resources and Identity Resources that may be accessed by this client
                     AllowedScopes = { "openid", "profile", "email", "identityApi","appUser_claim" },
 
-
-                      
-             
+                    // include the refresh token
                    AllowOfflineAccess = true
                 }
             };
