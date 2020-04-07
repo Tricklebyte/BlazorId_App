@@ -20,23 +20,32 @@ Sample Blazor Server Solution with IdentityServer and API
       * Custom Identity Resource **appUser_claim**
       
  ## Configuration
-* **Custom User Claim - appUser_Claim**
-   * For the claim to be added to the application cookie during IdentityServer login, several conditions must be met
-      1. The claim must be present for the user in the user store.
-      3. A custom Identity Resource must configured in Identity Server for the custom claim:
+### Custom User Claim - appUser_Claim
+#### Application user claim
+   * Required configuration for the custom user claim to be added to the application cookie during IdentityServer login:
+   1. The claim must be present for the user in the user store.
+   2. A custom Identity Resource must configured in Identity Server for the custom claim:
          ```c#
            new IdentityResource("appUser_claim", new []{"appUser_claim"})
          ```
-      2. The client config in IdentityServer must include this claim type in the client's **'Allowed Scopes'**:
+   3. The client config in IdentityServer must include this identity resource in the client's **'Allowed Scopes'**:
          ```c#
             client.AllowedScopes = {"openid","profile","email","identityApi","appUser_Claim"};
          ```
-      4. The client must request this scope in the Oidc configuration settings in Startup.ConfigureServices:
+   4. The client must request this scope in the Oidc configuration settings in Startup.ConfigureServices:
          ```c#
              options.Scope.Add("appUser_claim"); 
          ```
-      5. The client must map the IdentityServer Claim type to the Blazor App Claim type in the Oidc configuration settings in Startup.ConfigureServices:
+   5. The client must map the IdentityServer Claim type to the Blazor App Claim type in the Oidc configuration settings in Startup.ConfigureServices:
       ```c#
        options.ClaimActions.MapUniqueJsonKey("appUser_claim", "appUser_claim");
       ```
- 
+ #### API user claim
+ * Required configuration for the custom user claim to be included in the Access token for the API
+ 1. The custom claim must have been assigned to the User principal at login
+ 2. A custom API Resource must be configured in IdentityServer. The API Resource config must include the claim type in the api resource's **ClaimTypes**. The following code creates the API resource and assigned the claim type of appUser_Claim:
+ ```c#
+   new ApiResource("identityApi", 
+                                "Identity Claims Api", 
+                                 new []{"appUser_claim"})
+ ```
