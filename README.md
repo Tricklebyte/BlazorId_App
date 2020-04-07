@@ -19,7 +19,6 @@ Sample Blazor Server Solution with IdentityServer and API
       * Custom Api Resource **identityApi**
       * Custom Identity Resource **appUser_claim**
       
- 
  ## Configuration
 * **Custom User Claim - appUser_Claim**
    * For the claim to be added to the application cookie during IdentityServer login, several conditions must be met
@@ -36,4 +35,8 @@ Sample Blazor Server Solution with IdentityServer and API
          ```c#
              options.Scope.Add("appUser_claim"); 
          ```
+      5. The client must map the IdentityServer Claim type to the Blazor App Claim type in the Oidc configuration settings in Startup.ConfigureServices:
+      ```c#
+       options.ClaimActions.MapUniqueJsonKey("appUser_claim", "appUser_claim");
+      ```
  
