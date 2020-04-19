@@ -1,7 +1,7 @@
 # BlazorId_App
-Sample Blazor Server Solution with IdentityServer and API\n
-This Example solution demonstrates the following features:
-* Integrate a standard Blazor Server application with IdentityServer using auth code flow with PKCE protection.
+**Sample Blazor Server Solution with IdentityServer and API<br/>**
+This Example solution demonstrates how to do the following:
+* Integrate a Blazor Server application with IdentityServer using auth code flow with PKCE protection.
 * Configure a custom user claim in Identity Server and propagate it to the application cookie during user authentication.
 * Include the custom user claim in the access token when calling the API.
 * Use a shared authorization policy to secure the application and API.
