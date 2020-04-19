@@ -8,11 +8,13 @@ This Example solution demonstrates how to:
 
 # Blazor App Features
 **This application provides two protected User features:**<br/>
-**APP Identity:** Displays the claims of the current User identity for the application.<br/> 
-**API Identity:** Calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON to the application. The application then display those claims to the User. 
-* Action Links appear in the Left Nav Menu only when a User is authorized to use them. 
-* These app features, and the API controller method use a single authorization policy located in a shared project.
-* The policy requires custom user claim **userApp_claim** with valud "identity".
+## APP Identity
+Displays the claims of the current User identity for the application.<br/> 
+## API Identity
+Calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON to the application. The application then display those claims to the User. 
+ * Action Links appear in the Left Nav Menu only when a User is authorized to use them. 
+ * These app features, and the API controller method use a single authorization policy located in a shared project.
+ * The policy requires custom user claim **userApp_claim** with valud "identity".
 
 
 These allow the user to view all claims that have been assigned, and to differentiate between the Application user claims set and the API user claims set.
