@@ -16,26 +16,11 @@ Navigation Menu Item: calls a test API, which is protected by IdentityServer. Th
 * Navigation menu items appear in the Left Nav Menu only when a User is authorized to use them. 
 * These app features, and the API controller are protected by a single authorization policy located in a shared project.
 * The policy requires custom user claim **userApp_claim** with valud "identity".
+# Step 1 IdentityServer Configuration
+## Identity Resource
+## Api Resource
+## Client
 
-* **Blazor Server Application**
-   * Scaffolded Blazor Server template project, protected by Identity Server using Authorization Code flow w/PKCE
-   * Has protected views that display the User Claim set for the application or api
-      * Identity features protected by Authorization policy **CanViewIdentity** from BlazorId_Shared. 
-      * The policy requires custom claim type **appRole_claim** with value **identity**. 
-      * **CascadingAuthenticationState** is declared in file App.razor to support UI authorization functions
-      * **AuthorizeView** component is used in file NavMenu.razor to show / hide menu options based on authorization state
-* **User Claims API** 
-   * Returns current user claims as Json 
-   * Requires IdentityServer client scope **identityApi**
-   * Requires user claim type **appUser_claim** with value  **identity**
-   * Authorization policy from BlazorId_Shared is the same one used by the application.
-* **IdentityServer Demo** 
-   * Identity Server samples, quickstart #6 AspNet Identity
-   * Standard IdentityServer Demo project 
-      * .Net Identity - Users: Alice (privileged), Bob (non-privileged)
-      * Custom Api Resource **identityApi**
-      * Custom Identity Resource **appUser_claim**
-      
  ## Configuration
 ### Custom User Claim - appUser_Claim
 #### Application user claim
