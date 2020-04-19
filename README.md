@@ -1,16 +1,21 @@
 # BlazorId_App
 **Sample Blazor Server Application (with IdentityServer and API)<br/>**
-This Example solution demonstrates how to do the following:
+This Example solution demonstrates how to:
 * Integrate a Blazor Server application with IdentityServer using auth code flow with PKCE protection.
 * Configure a custom user claim in Identity Server and propagate it to the application cookie during user authentication.
 * Include the custom user claim in the access token when calling the API.
 * Use a shared authorization policy to secure the application and API.
 
 # Blazor App Features
-**The Blazor Server App provides two protected User features:**
-* **View App Claims:** Displays the claims of the current User identity for the application.
-* **View API Claims:** Calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON to the application. The application then display those claims to the User.
+**This application provides two protected User features:**<br/>
+* **APP Identity:** Displays the claims of the current User identity for the application.
+* **API Identity:** Calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON to the application. The application then display those claims to the User.<br/>
+Action Links appear in the Left Nav Menu only when a User is authorized to use them. <br/>
+These app features, and the API controller method use a single authorization policy located in a shared project.<br/>
+The policy requires custom user claim **userApp_claim** with valud "identity".
 
+
+These allow the user to view all claims that have been assigned, and to differentiate between the Application user claims set and the API user claims set.
 * **Blazor Server Application**
    * Scaffolded Blazor Server template project, protected by Identity Server using Authorization Code flow w/PKCE
    * Has protected views that display the User Claim set for the application or api
