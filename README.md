@@ -73,32 +73,32 @@ A client must be configured in Identity Server that has access to the API Resour
  // interactive ASP.NET Core Blazor Server Client
        new Client
            {
-                    ClientId = "BlazorID_App",
-                    ClientName="Blazor Server App - Identity Claims",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
+               ClientId = "BlazorID_App",
+               ClientName="Blazor Server App - Identity Claims",
+               ClientSecrets = { new Secret("secret".Sha256()) },
 
-                    // Use Code flow with PKCE (most secure)
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
+               // Use Code flow with PKCE (most secure)
+               AllowedGrantTypes = GrantTypes.Code,
+               RequirePkce = true,
                     
-                    // Do not require the user to give consent
-                    RequireConsent = false,                   
+               // Do not require the user to give consent
+               RequireConsent = false,                   
                 
-                    // where to redirect to after login
-                    RedirectUris = { "https://localhost:44321/signin-oidc" },
+               // where to redirect to after login
+               RedirectUris = { "https://localhost:44321/signin-oidc" },
 
-                    // where to redirect to after logout
-                    PostLogoutRedirectUris = { "https://localhost:44321/signout-callback-oidc" },
+               // where to redirect to after logout
+               PostLogoutRedirectUris = { "https://localhost:44321/signout-callback-oidc" },
 
-                    // Allowed Scopes - include Api Resources and Identity Resources that may be accessed by this client
-                    //                  The identityApi scope provides access to the API, the appUser_claim scope provides access to the custom Identity Resource
-                    AllowedScopes = { "openid", "profile", "email", "identityApi","appUser_claim" },
+               // Allowed Scopes - include Api Resources and Identity Resources that may be accessed by this client
+               // The identityApi scope provides access to the API, the appUser_claim scope provides access to the custom Identity Resource
+               AllowedScopes = { "openid", "profile", "email", "identityApi","appUser_claim" },
 
-                    // AllowOfflineAccess includes the refresh token
-                    // The application will get a new access token after the old one expires without forcing the user to sign in again.
-                    // Token management is done by the middleware, but the client must be allowed access here and the offline_access scope must be added in the OIDC settings in client Startup.ConfigureServices
-                   AllowOfflineAccess = true
-                }
+               // AllowOfflineAccess includes the refresh token
+               // The application will get a new access token after the old one expires without forcing the user to sign in again.
+               // Token management is done by the middleware, but the client must be allowed access here and the offline_access scope must be added in the OIDC settings in client Startup.ConfigureServices
+               AllowOfflineAccess = true
+           }
  ```
  
  # Step 2 Configure the API
