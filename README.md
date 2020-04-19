@@ -11,11 +11,12 @@ This application provides two protected User features that allow the user to vie
 ### APP Identity 
 Navigation Menu Item: displays the claims of the current User identity for the application.<br/> 
 ### API Identity 
-Navigation Menu Item: calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON to the application. The application then display those claims to the User. 
+Navigation Menu Item: calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON to the application. The application then displays those claims to the User. 
 ### Authorization
 * Navigation menu items appear in the Left Nav Menu only when a User is authorized to use them. 
 * These app features, and the API controller are protected by a single authorization policy located in a shared project.
 * The policy requires custom user claim **userApp_claim** with value **identity**.
+
 # Step 1 IdentityServer Configuration
 
 ## User with custom claim
@@ -67,6 +68,42 @@ A custom API Resource is required in IdentityServer to control access to the API
 ```
 
 ## Client
+A client must be configured in Identity Server that has access to the API Resource and the Identity Resource.<br/><br/>
+**Config.cs**<br/>
+```c#
+ // interactive ASP.NET Core Blazor Server Client
+                new Client
+                {
+                    ClientId = "BlazorID_App",
+                    ClientName="Blazor Server App - Identity Claims",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                    // Use Code flow with PKCE (most secure)
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    
+                    // Do not require the user to give consent
+                    RequireConsent = false,                   
+                
+                    // where to redirect to after login
+                    RedirectUris = { "https://localhost:44321/signin-oidc" },
+
+                    // where to redirect to after logout
+                    PostLogoutRedirectUris = { "https://localhost:44321/signout-callback-oidc" },
+
+                    // Allowed Scopes - include Api Resources and Identity Resources that may be accessed by this client
+                    //                  The identityApi scope provides access to the API, the appUser_claim scope provides access to the custom Identity Resource
+                    AllowedScopes = { "openid", "profile", "email", "identityApi","appUser_claim" },
+
+                    // AllowOfflineAccess includes the refresh token
+                    // The application will get a new access token after the old one expires without forcing the user to sign in again.
+                    // Token management is done by the middleware, but the client must be allowed access here and the offline_access scope must be added in the OIDC settings in client Startup.ConfigureServices
+                   AllowOfflineAccess = true
+                }
+```
+
+
+
 
  ## Configuration
 ### Custom User Claim - appUser_Claim
@@ -98,3 +135,10 @@ A custom API Resource is required in IdentityServer to control access to the API
                     new []{"appUser_claim"});
 
  ```
+ # Step 2 Configure the API
+ The demo API was created from the standard ASP.NET Core Web API template.
+ ## IdentityController
+ ## Startup.ConfigureServices
+ ### Authentication
+ ### Authorization
+ ## Startup.Configure
