@@ -26,15 +26,14 @@ Alice is assigned custom claim type userApp_claim with value **identity**<br/><b
 **SeedData.cs**<br/>
 ```c#
 result = userMgr.AddClaimsAsync(alice, new Claim[]{
-                        new Claim(JwtClaimTypes.Name, "Alice Smith"),
-                        new Claim(JwtClaimTypes.GivenName, "Alice"),
-                        new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                        new Claim(JwtClaimTypes.Email, "AliceSmith@email.com"),
-                        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
-                        new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
-                        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
-                        // Add user_scope claim for Identity to authorize UI and API actions. Alice has this claim, Bob does not.
-                        new Claim("appUser_claim","identity")
+             new Claim(JwtClaimTypes.GivenName, "Alice"),
+             new Claim(JwtClaimTypes.FamilyName, "Smith"),
+             new Claim(JwtClaimTypes.Email, "AliceSmith@email.com"),
+             new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
+             new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
+             new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
+             // Add user_scope claim for Identity to authorize UI and API actions. Alice has this claim, Bob does not.
+             new Claim("appUser_claim","identity")
 
 ```
 
