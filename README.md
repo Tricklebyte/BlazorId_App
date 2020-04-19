@@ -72,8 +72,8 @@ A client must be configured in Identity Server that has access to the API Resour
 **Config.cs**<br/>
 ```c#
  // interactive ASP.NET Core Blazor Server Client
-                new Client
-                {
+       new Client
+           {
                     ClientId = "BlazorID_App",
                     ClientName="Blazor Server App - Identity Claims",
                     ClientSecrets = { new Secret("secret".Sha256()) },
@@ -107,12 +107,12 @@ A client must be configured in Identity Server that has access to the API Resour
  ## IdentityController
  Add a new Controller to the project named IdentityController with the following code:
  ```c#
- //create base controller route
+  //create base controller route
     [Route("api/identity")]
 
     // This authorize attribute challenges all clients attempting to access all controller methods.
     // Clients must posses the client scope claim "identityApi" (api resource in IdentityServer)
-    // It is not actually required in this specific case, because there is only one controller method in the project and it has it's own Authorize attribute.
+    // It is not actually required in this specific case, because there is only one method and it has its own Authorize attribute.
     // However, it is a common practice to have this controller level attribute to ensure that Identity Server is protecting the entire controller, including methods that may be added in the future.
     [Authorize]
 
@@ -128,8 +128,6 @@ A client must be configured in Identity Server that has access to the API Resour
             return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
         }
     }
- 
- 
  
  ```
  
