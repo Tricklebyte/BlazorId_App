@@ -129,9 +129,53 @@ A client must be configured in Identity Server that has access to the API Resour
     }
  
  ```
- 
- 
+
  ## Startup.ConfigureServices
- ### Authentication
+### Authentication
+Add the following code to Startup.ConfigureServices to configure authentication
+```c#
+// configure bearer token authentication
+   services.AddAuthentication("Bearer")
+        .AddJwtBearer("Bearer", options =>
+         {
+           //IDentityServer url
+             options.Authority = "https://localhost:44387";
+                    
+           // RequireHttpsMetadata must be true in production
+             options.RequireHttpsMetadata = false;
+
+           // Audience is api Resource name
+             options.Audience = "identityApi";
+                
+          });
+
+```
  ### Authorization
- ## Startup.Configure
+ * The Policy: 
+ A claims-based authorization policy shared by the API and the Blazor app:<br/>
+ **BlazorId_Shared\Policies\Policies.CanViewIdentityPolicy:**
+ ```c#
+   public static AuthorizationPolicy CanViewIdentityPolicy()
+      {
+          return new AuthorizationPolicyBuilder()
+              .RequireAuthenticatedUser()
+              .RequireClaim("appuser_claim", "identity")
+              .Build();
+      }
+ 
+ ```
+ 
+* Startup.ConfigureServices
+ ```c#
+ services.AddAuthorization(authorizationOptions =>
+            {
+                // add authorization policy from Shared project 
+                // the same policy is used by the application to secure the button that calls the api.
+                // This policy checks for the presence of the userApp_claim with value "identity".
+                // The api also has authorization in place at the controller level provided by IdentityServer
+                authorizationOptions.AddPolicy(
+                    BlazorId_Shared.Policies.CanViewIdentity,
+                    BlazorId_Shared.Policies.CanViewIdentityPolicy());
+            });
+ 
+ ```
