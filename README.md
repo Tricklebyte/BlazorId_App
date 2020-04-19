@@ -1,5 +1,5 @@
 # BlazorId_App
-**Sample Blazor Server Solution with IdentityServer and API<br/>**
+**Sample Blazor Server Application (with IdentityServer and API)<br/>**
 This Example solution demonstrates how to do the following:
 * Integrate a Blazor Server application with IdentityServer using auth code flow with PKCE protection.
 * Configure a custom user claim in Identity Server and propagate it to the application cookie during user authentication.
@@ -7,7 +7,7 @@ This Example solution demonstrates how to do the following:
 * Use a shared authorization policy to secure the application and API.
 
 # Blazor App Features
-**This application provides two protected User features:**
+**The Blazor Server App provides two protected User features:**
 * **View App Claims:** Displays the claims of the current User identity for the application.
 * **View API Claims:** Calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON to the application. The application then display those claims to the User.
 
