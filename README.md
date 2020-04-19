@@ -54,7 +54,6 @@ new List<IdentityResource>
 ## Api Resource
 A custom API Resource is required in IdentityServer to control access to the API and specify which user claims should be included in the Access token.
 <br/><br/>
-
 **Config.cs**<br/>
 ```c#
    new List<ApiResource>
@@ -65,6 +64,7 @@ A custom API Resource is required in IdentityServer to control access to the API
                                 "Identity Claims Api",      // Display Name
                                  new []{"appUser_claim"})   // Claim Types
             };
+```
 
 ## Client
 
@@ -95,7 +95,6 @@ A custom API Resource is required in IdentityServer to control access to the API
  ```c#
    new ApiResource("identityApi", 
                    "Identity Claims Api", 
-                    new []{"appUser_claim"})
- ```
+                    new []{"appUser_claim"});
 
-         ```
+ ```
