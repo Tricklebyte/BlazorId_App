@@ -100,44 +100,40 @@ A client must be configured in Identity Server that has access to the API Resour
                     // Token management is done by the middleware, but the client must be allowed access here and the offline_access scope must be added in the OIDC settings in client Startup.ConfigureServices
                    AllowOfflineAccess = true
                 }
-```
-
-
-
-
- ## Configuration
-### Custom User Claim - appUser_Claim
-#### Application user claim
-   * Required configuration for the custom user claim to be added to the application cookie during IdentityServer login:
-   1. The claim must be present for the user in the user store.
-   2. A custom Identity Resource must configured in Identity Server for the custom claim:
-         ```c#
-           new IdentityResource("appUser_claim", new []{"appUser_claim"})
-         ```
-   3. The client config in IdentityServer must include this identity resource in the client's **'Allowed Scopes'**:
-         ```c#
-            client.AllowedScopes = {"openid","profile","email","identityApi","appUser_Claim"};
-         ```
-   4. The client must request this scope in the Oidc configuration settings in Startup.ConfigureServices:
-         ```c#
-             options.Scope.Add("appUser_claim"); 
-         ```
-   5. The client must map the IdentityServer Claim type to the Blazor App Claim type in the Oidc configuration settings in Startup.ConfigureServices:
-      ```c#
-       options.ClaimActions.MapUniqueJsonKey("appUser_claim", "appUser_claim");
-      ```
- #### API user claim
- *Additional configuration requirements for the custom user claim to be included in the Access token for the API
-   1.  The API Resource configuration in IdentityServer must include the custom claim type in the api resource's **ClaimTypes**. The following code creates the API resource and assigns the claim type of **appUser_claim**:
- ```c#
-   new ApiResource("identityApi", 
-                   "Identity Claims Api", 
-                    new []{"appUser_claim"});
-
  ```
+ 
  # Step 2 Configure the API
  The demo API was created from the standard ASP.NET Core Web API template.
  ## IdentityController
+ Add a new Controller to the project named IdentityController with the following code:
+ ```c#
+ //create base controller route
+    [Route("api/identity")]
+
+    // This authorize attribute challenges all clients attempting to access all controller methods.
+    // Clients must posses the client scope claim "identityApi" (api resource in IdentityServer)
+    // It is not actually required in this specific case, because there is only one controller method in the project and it has it's own Authorize attribute.
+    // However, it is a common practice to have this controller level attribute to ensure that Identity Server is protecting the entire controller, including methods that may be added in the future.
+    [Authorize]
+
+    public class IdentityController : ControllerBase
+    {
+        [HttpGet]
+        // Use samed shared authorization policy to protect the api GET method that is used to protect the application feature
+        // This checks for the user claim type appRole_Claim with value "identity".
+        [Authorize(Policy = Policies.CanViewIdentity)]
+        public IActionResult Get()
+        {
+            // return the claim set of the current API user as Json
+            return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
+        }
+    }
+ 
+ 
+ 
+ ```
+ 
+ 
  ## Startup.ConfigureServices
  ### Authentication
  ### Authorization
