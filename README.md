@@ -131,7 +131,7 @@ A client must be configured in Identity Server that has access to the API Resour
  ```
 
 ## Authorization Policy: 
- A claims-based authorization policy shared by the API and the Blazor app:<br/>
+ A claims-based authorization policy is shared by the API and the Blazor App:<br/>
  **BlazorId_Shared\Policies\Policies.CanViewIdentityPolicy:**
  ```c#
    public static AuthorizationPolicy CanViewIdentityPolicy()
@@ -208,6 +208,53 @@ A client must be configured in Identity Server that has access to the API Resour
  The demo Blazor Server App was created from the standard ASP.NET Core Blazor Server template.
  ## OIDC Settings
  ### Startup.ConfigureServices
+ ```c#
+             services.AddAuthentication(options =>
+            {
+                // the application's main authentication scheme will be cookies
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                
+                // the authentication challenge will be handled by the OIDC middleware, and ultimately IdentityServer  
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme,
+                options =>
+                {
+                    options.Authority = "https://localhost:44387/";
+                    options.ClientId = "BlazorID_App";
+                    options.ClientSecret = "secret";
+                    options.UsePkce = true;
+                    options.ResponseType = "code";
+                    options.Scope.Add("openid");
+                    options.Scope.Add("profile");
+                    options.Scope.Add("email");
+                    options.Scope.Add("offline_access");
+
+                    //Scope for accessing API
+                    options.Scope.Add("identityApi"); 
+
+                    // Scope for custom user claim
+                    options.Scope.Add("appUser_claim"); 
+
+                    // map custom user claim 
+                    options.ClaimActions.MapUniqueJsonKey("appUser_claim", "appUser_claim");
+                   
+                    //options.CallbackPath = ...
+                    options.SaveTokens = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;
+
+                });
+ 
+            services.AddAuthorization(authorizationOptions =>
+            {
+                // add authorization poliy from shared project. This is the same policy used by the API
+                authorizationOptions.AddPolicy(
+                    BlazorId_Shared.Policies.CanViewIdentity,
+                    BlazorId_Shared.Policies.CanViewIdentityPolicy());
+            });
+...
+ ```
  ### Startup.Configure
  ## Logging in and out
  ### Views
