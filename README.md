@@ -211,7 +211,7 @@ A client must be configured in Identity Server that has access to the API Resour
  ### Startup.Configure
  ## Logging in and out
  ### Views
- ### BlazorRazor Library
+ ### BlazorRazor Nuget Package
  ## Using Authorization in the UI
  ### \_Imports.razor
  ### \_NavMenu.razor
