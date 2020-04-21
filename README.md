@@ -179,3 +179,29 @@ Add the following code to Startup.ConfigureServices to configure authentication
             });
  
  ```
+
+## Startup.Configure
+```c#
+ public void Configure(IApplicationBuilder app)
+        {
+            app.UseRouting();
+
+            app.UseCors("default");
+
+            // add authentication first, followed by authorization
+            //     these two should come after app.UseRouting but before app.UseEndpoints
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
+
+```
+
+ # Step 3 Configure the Blazor Server Application
+ The demo Blazor Server App was created from the standard ASP.NET Core Blazor Server template.
+ ## 
