@@ -151,7 +151,7 @@ Add the following code to Startup.ConfigureServices to configure authentication
 
 ```
  ### Authorization
- * The Policy: 
+#### The Policy: 
  A claims-based authorization policy shared by the API and the Blazor app:<br/>
  **BlazorId_Shared\Policies\Policies.CanViewIdentityPolicy:**
  ```c#
@@ -165,7 +165,7 @@ Add the following code to Startup.ConfigureServices to configure authentication
  
  ```
  
-* Startup.ConfigureServices
+#### Startup.ConfigureServices
  ```c#
  services.AddAuthorization(authorizationOptions =>
             {
@@ -180,20 +180,16 @@ Add the following code to Startup.ConfigureServices to configure authentication
  
  ```
 
-## Startup.Configure
+#### Startup.Configure
 ```c#
  public void Configure(IApplicationBuilder app)
         {
             app.UseRouting();
-
             app.UseCors("default");
-
             // add authentication first, followed by authorization
             //     these two should come after app.UseRouting but before app.UseEndpoints
             app.UseAuthentication();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
