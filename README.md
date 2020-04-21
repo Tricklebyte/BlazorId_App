@@ -209,6 +209,9 @@ A client must be configured in Identity Server that has access to the API Resour
  ## OIDC Settings
  ### Startup.ConfigureServices
  ### Startup.Configure
+ ## Logging in and out
+ ### Views
+ ### BlazorRazor Library
  ## Using Authorization in the UI
  ### \_Imports.razor
  ### \_NavMenu.razor
