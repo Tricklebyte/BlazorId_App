@@ -200,4 +200,10 @@ Add the following code to Startup.ConfigureServices to configure authentication
 
  # Step 3 Configure the Blazor Server Application
  The demo Blazor Server App was created from the standard ASP.NET Core Blazor Server template.
- ## 
+ ## OIDC Settings
+ ### Startup.ConfigureServices
+ ### Startup.Configure
+ ## Using Authorization in the UI
+ ### \_Imports.razor
+ ### \_NavMenu.razor
+ 
