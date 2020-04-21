@@ -130,28 +130,7 @@ A client must be configured in Identity Server that has access to the API Resour
  
  ```
 
- ## Startup.ConfigureServices
-### Authentication
-Add the following code to Startup.ConfigureServices to configure authentication
-```c#
-// configure bearer token authentication
-   services.AddAuthentication("Bearer")
-        .AddJwtBearer("Bearer", options =>
-         {
-           //IDentityServer url
-             options.Authority = "https://localhost:44387";
-                    
-           // RequireHttpsMetadata must be true in production
-             options.RequireHttpsMetadata = false;
-
-           // Audience is api Resource name
-             options.Audience = "identityApi";
-                
-          });
-
-```
- ### Authorization
-#### The Policy: 
+## Authorization Policy: 
  A claims-based authorization policy shared by the API and the Blazor app:<br/>
  **BlazorId_Shared\Policies\Policies.CanViewIdentityPolicy:**
  ```c#
@@ -164,10 +143,38 @@ Add the following code to Startup.ConfigureServices to configure authentication
       }
  
  ```
- 
-#### Startup.ConfigureServices
- ```c#
- services.AddAuthorization(authorizationOptions =>
+ ## Startup.ConfigureServices
+
+```c#
+            services.AddControllers()
+                .AddNewtonsoftJson();
+
+            // configure bearer token authentication
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    //IDentityServer url
+                    options.Authority = "https://localhost:44387";
+                    
+                    // RequireHttpsMetadata must be true in production
+                    options.RequireHttpsMetadata = false;
+
+                    // Audience is api Resource name
+                    options.Audience = "identityApi";
+                });
+
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("https://localhost:44321")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
+            services.AddAuthorization(authorizationOptions =>
             {
                 // add authorization policy from Shared project 
                 // the same policy is used by the application to secure the button that calls the api.
@@ -177,10 +184,9 @@ Add the following code to Startup.ConfigureServices to configure authentication
                     BlazorId_Shared.Policies.CanViewIdentity,
                     BlazorId_Shared.Policies.CanViewIdentityPolicy());
             });
- 
  ```
 
-#### Startup.Configure
+### Startup.Configure
 ```c#
  public void Configure(IApplicationBuilder app)
         {
