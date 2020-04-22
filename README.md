@@ -256,9 +256,73 @@ A client must be configured in Identity Server that has access to the API Resour
 ...
  ```
  ### Startup.Configure
+ ```c
+ if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
+            // add authentication first, followed by authorization
+            // these should come after app.UseRouting and before app.UseEndpoints
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
+            });
+ 
+ ```
  ## Logging in and out
- ### Views
- ### BlazorRazor Nuget Package
+ A Blazor component cannot correctly redirect to the IdentityServer Login and Login functions.<br/>
+ To sign in and out, the HttpResponse must be modified by adding a cookie. A Blazor component starts the response immediately when it  is rendered and it cannot be changed afterward.<br/>
+ A razor page (or MVC view) must be used to perform the redirect from the Blazor Component to the actual IdentityServer login and logout pages. 
+  The Login and Logout Razor pages redirect to IdentityServer.
+ Each page contains the cs file only, with no markup, and each has a single Get method
+ 
+ 
+### LoginIDP.cshtml.cs
+```c#
+ public async Task OnGetAsync()
+        {
+            if (!HttpContext.User.Identity.IsAuthenticated)
+            {
+                //Call the challenge on the OIDC scheme and trigger the redirect to IdentityServer
+                await HttpContext.ChallengeAsync(OpenIdConnectDefaults.AuthenticationScheme);
+            }
+            else
+            {
+                // redirect to the root
+                Response.Redirect(Url.Content("~/").ToString());
+            }
+        }
+```
+### LogoutIDP.Razor
+```c#
+public async Task OnGetAsync()
+        {
+          // Sign out of Cookies and OIDC
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+        }
+```        
+### BlazorRazor Razor Class Library
+Razor Class Library containing LoginIDP and LogoutIDP pages<br/>
+After referencing this nuget package, simply direct login actions to "/LoginIDP" and Logout actions to "/LogoutIDP". 
+
+**BlazorID_App.csproj**<br/>
+  ```xml
+  <ItemGroup>
+    <PackageReference Include="BlazorRazor" Version="1.0.0" />
+```
  ## Using Authorization in the UI
  ### \_Imports.razor
  ### \_NavMenu.razor
