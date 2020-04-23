@@ -328,8 +328,8 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
 
 **\_NavMenu.razor**
 ```xml
-   <NavLink class="nav-link" href="LoginIDP"> Log in </NavLink>
-   <NavLink class="nav-link" href="LogoutIDP"> Log out </NavLink>
+   <NavLink class="nav-link" href="/LoginIDP"> Log in </NavLink>
+   <NavLink class="nav-link" href="/LogoutIDP"> Log out </NavLink>
 ```
 
  ## Using Authentication and Authorization in the UI 
