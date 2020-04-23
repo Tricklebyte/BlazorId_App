@@ -282,7 +282,7 @@ A client must be configured in Identity Server that has access to the API Resour
  
  ```
  ## Logging in and out
- A Blazor component cannot correctly redirect to the IdentityServer Login and Login functions.<br/>
+ On its own, a Blazor component cannot correctly redirect to the IdentityServer Login and Login functions.<br/>
  This is because for signing in and out, the HttpResponse must be modified by adding a cookie - but a pure Blazor component starts the response immediately when it  is rendered and it cannot be changed afterward.<br/>
  An intermediary razor page (or MVC view) must be used to perform the redirect from the Blazor Component to the actual IdentityServer login and logout pages because the Razor Page (or MVC view) is able to manipulate the response correctly before sending it.<br/>
  These pages have a cs file only, with no markup, and each has a single Get method that performs the required actions.
@@ -332,7 +332,17 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
    <NavLink class="nav-link" href="LogoutIDP"> Log out </NavLink>
 ```
 
- ## Using Authorization in the UI ### \_Imports.razor
+ ## Using Authentication and Authorization in the UI 
+ Two things must be configured for auth information to be used by the UI:
+ * Cascading Authentication State<br/>
+ This authorization component is configured in **\_App.razor**<br/>
+ Authentication in SignalR apps is established with the initial connection. The **Authentiction Provider Service** then allows other   components to use the auth info that is received by the Cascading Authentication State component at sign in. We usually don't interact with the CascadingAuthenticationState module or AuthenticationProviderService service directly. The way we interact with the Authentication Provider Service in the UI is usually by using the **AuthorizedView** component.
+ 
+ * Authorized View
+ 
+ 
+ 
+ ### \_Imports.razor
  
  ### \_NavMenu.razor
  
