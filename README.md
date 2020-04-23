@@ -340,17 +340,49 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
 ```
 
 
-
  ## Using Authentication and Authorization in the UI 
 
-**CascadingAuthenticationState**<br/>
- Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and makes it available to the **AuthenticationProviderService**.<br/><br/>
+* **CascadingAuthenticationState**<br/>
+ Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/>            
  
-**AuthentictionProviderService:** provides authentication information from the CascadingAuthenticationState components to other components.<br/>
+ **AuthorizeRouteView** component in App.razor uses CascadingAuthenticationState to allow or deny access to component routes based on the authorization state of the component. The route request is allowed or redirected based on the authorization results of the page's authorization attribute. Authorization attributes may only be used on componetnst with a @Page directive.
+ 
 
-The CascadingAuthenticationState module and AuthenticationProviderService service are used directly in most cases. The way we usually interact with the Authentication Provider Service in the UI is by using the **AuthorizedView** component.<br/>
+**App.razor**<br/><br/>
  
- * AuthorizedView
+```xml
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <h1>Sorry, you're not authorized to view this page.</h1>
+                    <p>You may want to try logging in (as someone with the necessary authorization).</p>
+                </NotAuthorized>
+            </AuthorizeRouteView>
+        </Found>
+        <NotFound>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p>Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>
+```
+ 
+
+
+ 
+* **AuthentictionProviderService:** provides authentication information from the CascadingAuthenticationState components to other components.<br/>
+
+ * **AuthorizedViewComponent**
+ 
+The CascadingAuthenticationState module and AuthenticationProviderService service are not used directly in most cases. The way we usually consume data from the Authentication Provider Service in the UI is by using the **AuthorizedView** component.<br/>
+The AuthorizedViewComponent:
+* Provides access to user claims from the HttpContext user
+* Shows or Hides sections of the User Interface based on Authorization state
+* Supports authorization attributes
+
  
  
  
