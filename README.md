@@ -13,7 +13,7 @@ Navigation Menu Item: displays the claims of the current User identity for the a
 ### API Identity 
 Navigation Menu Item: calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON to the application. The application then displays those claims to the User. 
 ### Authorization
-* Navigation menu items appear in the Left Nav Menu only when a User is authorized to use them. 
+* Navigation menu items are only visible in the Left Nav Menu  when a User is authorized to use them. 
 * These app features, and the API controller are protected by a single authorization policy located in a shared project.
 * The policy requires custom user claim **userApp_claim** with value **identity**.
 
@@ -283,13 +283,13 @@ A client must be configured in Identity Server that has access to the API Resour
  ```
  ## Logging in and out
  A Blazor component cannot correctly redirect to the IdentityServer Login and Login functions.<br/>
- To sign in and out, the HttpResponse must be modified by adding a cookie. A Blazor component starts the response immediately when it  is rendered and it cannot be changed afterward.<br/>
- A razor page (or MVC view) must be used to perform the redirect from the Blazor Component to the actual IdentityServer login and logout pages. 
-  The Login and Logout Razor pages redirect to IdentityServer.
- Each page contains the cs file only, with no markup, and each has a single Get method
+ This is because for signing in and out, the HttpResponse must be modified by adding a cookie - but a pure Blazor component starts the response immediately when it  is rendered and it cannot be changed afterward.<br/>
+ An intermediary razor page (or MVC view) must be used to perform the redirect from the Blazor Component to the actual IdentityServer login and logout pages because the Razor Page (or MVC view) is able to manipulate the response correctly before sending it.<br/>
+ These pages have a cs file only, with no markup, and each has a single Get method that performs the required actions.
  
  
 ### LoginIDP.cshtml.cs
+The LoginIDP page invokes the ChallengeAsync method on the OIDC scheme, triggering the redirect to IdentityServer for Authentication.
 ```c#
  public async Task OnGetAsync()
         {
@@ -306,24 +306,32 @@ A client must be configured in Identity Server that has access to the API Resour
         }
 ```
 ### LogoutIDP.Razor
+The LogoutIDP page invokes the SignOutAsync method for both Authentication Schemes (Cookies and OIDC)
 ```c#
 public async Task OnGetAsync()
         {
-          // Sign out of Cookies and OIDC
+          // Sign out of Cookies and OIDC schemes
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
         }
 ```        
 ### BlazorRazor Razor Class Library
-Razor Class Library containing LoginIDP and LogoutIDP pages<br/>
-After referencing this nuget package, simply direct login actions to "/LoginIDP" and Logout actions to "/LogoutIDP". 
+You could create your own LoginIDP and LogoutIDP pages.
+This sample project is using the LoginIDP and LogoutIDP pages from Nuget Package BlazorRazor<br/>
+After referencing this nuget package, simply direct logins to "/LoginIDP" and logouts to "/LogoutIDP". 
 
 **BlazorID_App.csproj**<br/>
   ```xml
   <ItemGroup>
     <PackageReference Include="BlazorRazor" Version="1.0.0" />
 ```
- ## Using Authorization in the UI
- ### \_Imports.razor
+
+**\_NavMenu.razor**
+   <NavLink class="nav-link" href="LoginIDP"> Log in </NavLink>
+   <NavLink class="nav-link" href="LogoutIDP"> Log out </NavLink>
+    
+
+ ## Using Authorization in the UI ### \_Imports.razor
+ 
  ### \_NavMenu.razor
  
