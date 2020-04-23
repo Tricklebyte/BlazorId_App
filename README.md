@@ -19,10 +19,17 @@ Navigation Menu Item: calls a test API, which is protected by IdentityServer. Th
 
 # Step 1 IdentityServer Configuration
 
+## Create IdentityServerProject
+Create the IdentityServer project using the IdentityServer and .NET Identity project template **is4aspid**<br/>
+```shell
+dotnet new is4aspid -n IdentityServerAspNetIdentity
+```
+
+
 ## User with custom claim
-Uses IdentityServer Quickstart 6 AspNetIdentity sample project.<br/>
 Test users and claims are created in SeedData.cs. <br/>
-Alice is assigned custom claim type userApp_claim with value **identity**<br/><br/>
+For the Alice user only, add a custom claim of type userApp_claim with value **identity**<br/>
+<br/>
 **SeedData.cs**<br/>
 ```c#
 result = userMgr.AddClaimsAsync(alice, new Claim[]{
@@ -32,6 +39,7 @@ result = userMgr.AddClaimsAsync(alice, new Claim[]{
              new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
              new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
              new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
+             
              // Add user_scope claim for Identity to authorize UI and API actions. Alice has this claim, Bob does not.
              new Claim("appUser_claim","identity")
 
@@ -335,12 +343,14 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
 
  ## Using Authentication and Authorization in the UI 
 
-**Cascading Authentication State**<br/>
+**CascadingAuthenticationState**<br/>
  Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and makes it available to the **AuthenticationProviderService**.<br/><br/>
  
-**Authentiction Provider Service:** provides authentication information from the CascadingAuthenticationState components to other components. A We usually don't interact with the CascadingAuthenticationState module or AuthenticationProviderService service directly The way we interact with the Authentication Provider Service in the UI is usually by using the **AuthorizedView** component.
+**AuthentictionProviderService:** provides authentication information from the CascadingAuthenticationState components to other components.<br/>
+
+The CascadingAuthenticationState module and AuthenticationProviderService service are used directly in most cases. The way we usually interact with the Authentication Provider Service in the UI is by using the **AuthorizedView** component.<br/>
  
- * Authorized View
+ * AuthorizedView
  
  
  
