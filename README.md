@@ -11,7 +11,7 @@ This application provides two protected User features that allow the user to vie
 ### APP Identity 
 Navigation Menu Item: displays the claims of the current User identity for the application.<br/> 
 ### API Identity 
-Navigation Menu Item: calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON to the application. The application then displays those claims to the User. 
+Navigation Menu Item: calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON. The application then displays those claims to the User. 
 ### Authorization
 * Navigation menu items are only visible in the Left Nav Menu  when a User is authorized to use them. 
 * These app features, and the API controller are protected by a single authorization policy located in a shared project.
