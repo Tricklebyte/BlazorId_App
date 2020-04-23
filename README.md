@@ -317,7 +317,7 @@ public async Task OnGetAsync()
 ```        
 ### BlazorRazor Razor Class Library
 You could create your own LoginIDP and LogoutIDP pages.
-This sample project is using the LoginIDP and LogoutIDP pages from Nuget Package BlazorRazor<br/>
+This sample project is using the LoginIDP and LogoutIDP pages from Nuget Package [BlazorRazor](https://www.nuget.org/packages/BlazorRazor/)<br/>
 After referencing this nuget package, simply direct logins to "/LoginIDP" and logouts to "/LogoutIDP". 
 
 **BlazorID_App.csproj**<br/>
