@@ -316,9 +316,7 @@ public async Task OnGetAsync()
         }
 ```        
 ### BlazorRazor Razor Class Library
-You could create your own LoginIDP and LogoutIDP pages.
-This sample project is using the LoginIDP and LogoutIDP pages from Nuget Package [BlazorRazor](https://www.nuget.org/packages/BlazorRazor/)<br/>
-After referencing this nuget package, simply direct logins to "/LoginIDP" and logouts to "/LogoutIDP". 
+This sample project is using LoginIDP and LogoutIDP provided by Nuget package [BlazorRazor](https://www.nuget.org/packages/BlazorRazor/)<br/>
 
 **BlazorID_App.csproj**<br/>
   ```xml
@@ -326,17 +324,21 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
     <PackageReference Include="BlazorRazor" Version="1.0.0" />
 ```
 
+After referencing this nuget package, simply direct logins to "/LoginIDP" and logouts to "/LogoutIDP". <br/>
 **\_NavMenu.razor**
 ```xml
    <NavLink class="nav-link" href="/LoginIDP"> Log in </NavLink>
    <NavLink class="nav-link" href="/LogoutIDP"> Log out </NavLink>
 ```
 
+
+
  ## Using Authentication and Authorization in the UI 
- Two things must be configured for auth information to be used by the UI:
- * Cascading Authentication State<br/>
- This authorization component is configured in **\_App.razor**<br/>
- Authentication in SignalR apps is established with the initial connection. The **Authentiction Provider Service** then allows other   components to use the auth info that is received by the Cascading Authentication State component at sign in. We usually don't interact with the CascadingAuthenticationState module or AuthenticationProviderService service directly. The way we interact with the Authentication Provider Service in the UI is usually by using the **AuthorizedView** component.
+
+**Cascading Authentication State**<br/>
+ Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and makes it available to the **AuthenticationProviderService**.<br/><br/>
+ 
+**Authentiction Provider Service:** provides authentication information from the CascadingAuthenticationState components to other components. A We usually don't interact with the CascadingAuthenticationState module or AuthenticationProviderService service directly The way we interact with the Authentication Provider Service in the UI is usually by using the **AuthorizedView** component.
  
  * Authorized View
  
