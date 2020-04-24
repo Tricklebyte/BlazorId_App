@@ -4,7 +4,7 @@ This Example solution demonstrates how to:
 * Integrate a Blazor Server application with IdentityServer and ASP.NET Identity using auth code flow with PKCE protection.
 * Configure a custom user claim in Identity Server and propagate it to the application cookie during user authentication.
 * Include the custom user claim in the access token when calling the API.
-* Use a shared authorization policy to secure the application and API.
+* Use one shared authorization policy to secure the navigation link, route path, and API controller method.
 
 # Blazor App Features
 This application provides two protected User features that allow the user to view all claims that have been assigned, and to differentiate between the Application user claims set and the API user claims set.
@@ -342,11 +342,13 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
 
  ## Using Authentication and Authorization in the UI 
 
-* **CascadingAuthenticationState**<br/>
+### CascadingAuthenticationState
  Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/>            
  
- **AuthorizeRouteView** component in App.razor uses CascadingAuthenticationState to allow or deny access to component routes based on the authorization state of the component. The route request is allowed or redirected based on the authorization results of the page's authorization attribute. Authorization attributes may only be used on componetnst with a @Page directive.
- 
+### AuthorizeRouteView
+Uses CascadingAuthenticationState in the App.Razor file to allow or deny access to component routes based on the authorization state.  Components with the @Page directive support the use of Authorization attibutes. The AuthorizeRouteView component uses the authorization results to grant or deny access to the requested route. 
+* When the authorization fails, the code in the **NotAuthorized** element is activated and route is denied. A denial message is returned to the caller. 
+* When the authorization succeeds, the code in the **NotAuthorized** element is not activated and the requested is routed as usual.
 
 **App.razor**<br/><br/>
  
@@ -369,13 +371,11 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
     </Router>
 </CascadingAuthenticationState>
 ```
- 
-
 
  
 * **AuthentictionProviderService:** provides authentication information from the CascadingAuthenticationState components to other components.<br/>
 
- * **AuthorizedViewComponent**
+ ### **AuthorizedViewComponent**
  
 The CascadingAuthenticationState module and AuthenticationProviderService service are not used directly in most cases. The way we usually consume data from the Authentication Provider Service in the UI is by using the **AuthorizedView** component.<br/>
 The AuthorizedViewComponent:
