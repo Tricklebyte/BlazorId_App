@@ -363,12 +363,11 @@ Authentication in SignalR apps is established with the initial connection. The C
 * Prevents direct navigation to an unauthorized page by entering the URI in the browser. 
 * The protected component must contain the @Page directive meaning it is a routable component.
 * The protected component must contain an Authorization attribute that is used to the generate authorization status.
-<br/>
-* **AuthorizeRouteView** is configured in  the **App.Razor** file. 
+* **AuthorizeRouteView** is configured in the **App.Razor** file. 
 <br/><br/>
 
 **App.razor**<br/>
-* The AuthorizeRouteView element is wrapped in the CascadingAuthenticationState element, and thus can access the authentication and authorization status data.
+* The AuthorizeRouteView element is wrapped in the **CascadingAuthenticationState** element, and thus can access the authentication and authorization status data.
 * When the authorization fails, the code in the **NotAuthorized** element is activated a denial message is returned to the caller instead of the page.
 * When the authorization succeeds, the code in the **NotAuthorized** element is **not** activated and the requeste is returned as usual.<br/>
 
