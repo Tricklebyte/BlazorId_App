@@ -358,18 +358,19 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
 Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/>   
  
 #### AuthorizeRouteView component 
-* Controls to application routes based on the user's authorization status. <br/>
-* Prevents the user from navigation to an unauthorized page by typing in the URI browser. 
+* Configured in App.razor
+* Controls access to application routes based on the user's authorization status. <br/>
+* Prevents direct navigation to an unauthorized page by entering the URI in the browser. 
 * The protected component must contain the @Page directive meaning it is a routable component.
 * The protected component must contain an Authorization attribute that is used to the generate authorization status.
 <br/>
-* **AuthorizeRouteView** is configured in  the **App.Razor** file. Notice that the AuthorizeRouteView element is wrapped in the CascadingAuthenticationState element, and thus can access the authentication and authorization status data.
+* **AuthorizeRouteView** is configured in  the **App.Razor** file. 
 <br/><br/>
 
 **App.razor**<br/>
-
+* The AuthorizeRouteView element is wrapped in the CascadingAuthenticationState element, and thus can access the authentication and authorization status data.
 * When the authorization fails, the code in the **NotAuthorized** element is activated a denial message is returned to the caller instead of the page.
-* When the authorization succeeds, the code in the **NotAuthorized** element is **not** activated and the requeste is returned as usual.br/>
+* When the authorization succeeds, the code in the **NotAuthorized** element is **not** activated and the requeste is returned as usual.<br/>
 
 ```xml
 <CascadingAuthenticationState>
