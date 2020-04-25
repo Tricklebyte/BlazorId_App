@@ -358,22 +358,11 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
 Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/>   
  
 #### AuthorizeRouteView component 
-##### The AuthorizeRouteView component grant or denies access to routes based on the user's authorization status. <br/>
-* This provides an additional layer of security to hiding nav menu items and prevents the user from navigating directly to an unauthorized page by typing in the URI. 
-* Components with the **@Page Directive** support authorization attributes. These attributes are used by the AuthorizeRouteView to allow only authorized users to navigate to the page at the router level. 
-* When the authorization fails, the code in the **NotAuthorized** element is activated and route is denied. A denial message is returned to the caller instead of the page.
-* When the authorization succeeds, the code in the **NotAuthorized** element is not activated and the requested is returned as usual.
+* Controls to application routes based on the user's authorization status. <br/>
+* Prevents the user from navigation to an unauthorized page by typing in the URI browser. 
+* The component must contain the @Page directive meaning it is a routable component.
+* The component must contain an Authorization attribute that is used to the generate authorization status<br/>
 
- 
-
- 
-
-  
-
-
-
- #### Component Level Authorization Attribute
-Components with the @Page directive support the use of Authorization attibutes. The CascadingAuthenticationState component allows access to The results of these attributes are used by the **AuthorizedView** and **AuthorizedRouteView** components.
 **App.razor**<br/><br/>
  
 ```xml
@@ -395,6 +384,9 @@ Components with the @Page directive support the use of Authorization attibutes. 
     </Router>
 </CascadingAuthenticationState>
 ```
+<br/><br/>
+* When the authorization fails, the code in the **NotAuthorized** element is activated a denial message is returned to the caller instead of the page.
+* When the authorization succeeds, the code in the **NotAuthorized** element is **not** activated and the requeste is returned as usual.
 
  
 
