@@ -13,11 +13,11 @@ Navigation Menu Item: displays the claims of the current User identity for the a
 ### API Identity 
 Navigation Menu Item: calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON. The application then displays those claims to the User. 
 ### Authorization
-The sample project demonstrates security using 4 layers. You may use the one(s) that best suited to your application, environment, and risk-tolerance level.
-1. **Application Navigaion:** Hide Navigation Links for unauthorized user
-2. **Application Page Routing:** Block page route paths for unauthorized users
-3. Deny API access to unauthorized user
-4. Deny API access to unauthorized client
+The sample project demonstrates security using 4 layers. Use the ones best suited to your application, environment, and risk tolerance.
+1. **Application Navigaion:** Hide Navigation Links for unauthorized Application users
+2. **Application Page Routing:** Block page route paths for unauthorized Application users
+3. **API User** Deny API access to unauthorized users
+4. **API Client** Deny API access to unauthorized clients
 
 * These app features, and the API controller are protected by a single authorization policy located in a shared project.
 * The policy requires custom user claim **userApp_claim** with value **identity**.
@@ -29,7 +29,6 @@ Create the IdentityServer project using the IdentityServer and .NET Identity pro
 ```shell
 dotnet new is4aspid -n IdentityServerAspNetIdentity
 ```
-
 
 ## User with custom claim
 Test users and claims are created in SeedData.cs. <br/>
