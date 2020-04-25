@@ -266,7 +266,7 @@ A client must be configured in Identity Server that has access to the API Resour
 ...
  ```
  ### Startup.Configure
-  **Add services to the request pipeline in correct processing order:
+  **Add services to the request pipeline in correct processing order:**
     * Static Files 
     * Authentication
     * Authorization
@@ -349,10 +349,10 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
  ## Using Authentication and Authorization in the UI 
  
  
-#### CascadingAuthenticationState** Component<br/>
+### CascadingAuthenticationState Component
 Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/>   
  
-#### AuthorizeRouteView component 
+### AuthorizeRouteView component 
 * Configured in App.razor
 * Controls access to application routes based on the user's authorization status. <br/>
 * Prevents direct navigation to an unauthorized page by entering the URI in the browser. 
