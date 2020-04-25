@@ -217,7 +217,7 @@ A client must be configured in Identity Server that has access to the API Resour
  The demo Blazor Server App was created from the standard ASP.NET Core Blazor Server template.
  ## OIDC Settings
  ### Startup.ConfigureServices
- **Configure Authentication (OIDC) and Authorization services
+ **Configure Authentication (OIDC) and Authorization services**
  ```c#
              services.AddAuthentication(options =>
             {
