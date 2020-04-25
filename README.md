@@ -14,8 +14,8 @@ Navigation Menu Item: displays the claims of the current User identity for the a
 Navigation Menu Item: calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON. The application then displays those claims to the User. 
 ### Authorization
 The sample project demonstrates security using 4 layers. Use the ones best suited to your application, environment, and risk tolerance.
-1. **Application Navigaion:** Hide Navigation Links for unauthorized Application users
-2. **Application Page Routing:** Block page route paths for unauthorized Application users
+1.**Application Routing:** Block application route paths for unauthorized Application users 
+2. **Application Navigaion:** Hide Navigation Links for unauthorized Application users
 3. **API User** Deny API access to unauthorized users
 4. **API Client** Deny API access to unauthorized clients
 
@@ -220,6 +220,7 @@ A client must be configured in Identity Server that has access to the API Resour
  The demo Blazor Server App was created from the standard ASP.NET Core Blazor Server template.
  ## OIDC Settings
  ### Startup.ConfigureServices
+ **Configure Authentication (OIDC) and Authorization services
  ```c#
              services.AddAuthentication(options =>
             {
@@ -268,6 +269,12 @@ A client must be configured in Identity Server that has access to the API Resour
 ...
  ```
  ### Startup.Configure
+  **Add services to the request pipeline in correct processing order:
+    * Static Files 
+    dd
+    * Authentication
+    * Authorization
+    * Use Endpoints
  ```c
  if (env.IsDevelopment())
             {
@@ -346,14 +353,20 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
 
  ## Using Authentication and Authorization in the UI 
 
-### CascadingAuthenticationState component
- Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/>            
- 
-### AuthorizeRouteView component
-Uses CascadingAuthenticationState in the App.Razor file to allow or deny access to component routes based on the authorization state.  Components with the @Page directive support the use of Authorization attibutes. The AuthorizeRouteView component uses the component's authorization results to grant or deny access to the requested route. 
-* When the authorization fails, the code in the **NotAuthorized** element is activated and route is denied. A denial message is returned to the caller. 
+#### CascadingAuthenticationState Component
+ Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/>     
+ The **AuthorizedView**  and  **AuthorizedRouteView** are the two used by this demmo project.
+
+
+
+#### AuthorizeRouteView component
+The AuthorizeRouteView component uses the component's authorization results to grant or deny access to the requested route. 
+* When the authorization fails, the code in the **NotAuthorized** element is activated and route is denied. A denial message is returned to the caller.
 * When the authorization succeeds, the code in the **NotAuthorized** element is not activated and the requested is routed as usual.
 
+
+ #### Component Level Authorization Attribute
+Components with the @Page directive support the use of Authorization attibutes. The CascadingAuthenticationState component allows access to The results of these attributes are used by the **AuthorizedView** and **AuthorizedRouteView** components.
 **App.razor**<br/><br/>
  
 ```xml
@@ -382,7 +395,7 @@ Uses CascadingAuthenticationState in the App.Razor file to allow or deny access 
  ### **AuthorizedViewComponent**
 
 
- Components with the @Page directive support the use of Authorization attibutes. 
+
  The AuthorizeRouteView component displays different UI content based on the user's authorization status. 
  It can be used anywhere that razor markup is used to generate UI content.    
  When the authorization fails, the code in the **NotAuthorized** element is activated and route is denied. A denial message is returned   to the caller. 
@@ -394,3 +407,4 @@ Uses CascadingAuthenticationState in the App.Razor file to allow or deny access 
  
  ### \_NavMenu.razor
  
+ ### Layer 1 - Block application route paths for unauthorized Application users 
