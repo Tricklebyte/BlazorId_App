@@ -360,11 +360,17 @@ Authentication in SignalR apps is established with the initial connection. The C
 #### AuthorizeRouteView component 
 * Controls to application routes based on the user's authorization status. <br/>
 * Prevents the user from navigation to an unauthorized page by typing in the URI browser. 
-* The component must contain the @Page directive meaning it is a routable component.
-* The component must contain an Authorization attribute that is used to the generate authorization status<br/>
+* The protected component must contain the @Page directive meaning it is a routable component.
+* The protected component must contain an Authorization attribute that is used to the generate authorization status.
+<br/>
+* **AuthorizeRouteView** is configured in  the **App.Razor** file. Notice that the AuthorizeRouteView element is wrapped in the CascadingAuthenticationState element, and thus can access the authentication and authorization status data.
+<br/><br/>
 
-**App.razor**<br/><br/>
- 
+**App.razor**<br/>
+
+* When the authorization fails, the code in the **NotAuthorized** element is activated a denial message is returned to the caller instead of the page.
+* When the authorization succeeds, the code in the **NotAuthorized** element is **not** activated and the requeste is returned as usual.br/>
+
 ```xml
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly">
@@ -384,9 +390,7 @@ Authentication in SignalR apps is established with the initial connection. The C
     </Router>
 </CascadingAuthenticationState>
 ```
-<br/><br/>
-* When the authorization fails, the code in the **NotAuthorized** element is activated a denial message is returned to the caller instead of the page.
-* When the authorization succeeds, the code in the **NotAuthorized** element is **not** activated and the requeste is returned as usual.
+
 
  
 
