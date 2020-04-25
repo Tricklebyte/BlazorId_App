@@ -352,17 +352,24 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
 
 
  ## Using Authentication and Authorization in the UI 
+ 
+ 
+#### CascadingAuthenticationState** Component<br/>
+Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/>   
+ 
+#### AuthorizeRouteView component 
+##### The AuthorizeRouteView component grant or denies access to routes based on the user's authorization status. <br/>
+* This provides an additional layer of security to hiding nav menu items and prevents the user from navigating directly to an unauthorized page by typing in the URI. 
+* Components with the **@Page Directive** support authorization attributes. These attributes are used by the AuthorizeRouteView to allow only authorized users to navigate to the page at the router level. 
+* When the authorization fails, the code in the **NotAuthorized** element is activated and route is denied. A denial message is returned to the caller instead of the page.
+* When the authorization succeeds, the code in the **NotAuthorized** element is not activated and the requested is returned as usual.
 
-#### CascadingAuthenticationState Component
- Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/>     
- The **AuthorizedView**  and  **AuthorizedRouteView** are the two used by this demmo project.
+ 
 
+ 
 
+  
 
-#### AuthorizeRouteView component
-The AuthorizeRouteView component uses the component's authorization results to grant or deny access to the requested route. 
-* When the authorization fails, the code in the **NotAuthorized** element is activated and route is denied. A denial message is returned to the caller.
-* When the authorization succeeds, the code in the **NotAuthorized** element is not activated and the requested is routed as usual.
 
 
  #### Component Level Authorization Attribute
