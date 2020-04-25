@@ -345,9 +345,7 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
    <NavLink class="nav-link" href="/LogoutIDP"> Log out </NavLink>
 ```
 
-
  ## Using Authentication and Authorization in the UI 
- 
  
 ### CascadingAuthenticationState Component
 Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/>   
@@ -386,20 +384,37 @@ Authentication in SignalR apps is established with the initial connection. The C
 </CascadingAuthenticationState>
 ```
 
-
- 
-
-
  ### **AuthorizedViewComponent**
 
+ * The AuthorizeRouteView component displays different UI content based on the user's authorization status. 
+ * It can be used anywhere that razor markup is used to generate UI content.    
 
-
- The AuthorizeRouteView component displays different UI content based on the user's authorization status. 
- It can be used anywhere that razor markup is used to generate UI content.    
- When the authorization fails, the code in the **NotAuthorized** element is activated and route is denied. A denial message is returned   to the caller. 
- When the authorization succeeds, the code in the **NotAuthorized** element is not activated and the requested is routed as usual.
-
+ * When the authorization succeeds, the code in the **Authorized element** is activated and the markup content generated within that section will be rendered.
+ * When the authorization fails, the code in the **NotAuthorized element** is activated and the markup content generated within the NotAuthorized section will be rendered.
  
+ <br/>
+ **This is a partial example from the Project NavMenu.razor file** <br/>
+ * The authorized user only sees the Logout link
+ * The unauthorixed user only sees the Login link 
+
+**NavMenu.razor**
+  <AuthorizeView>
+        <Authorized>
+           <li class="nav-item px-3">
+                <NavLink class="nav-link"
+                         href="/LogoutIDP">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Log out
+                    (@context.User.Claims.FirstOrDefault(c => c.Type == "name")?.Value)
+                </NavLink>
+            </li>
+       </Authorized>
+            <NotAuthorized>
+                <NavLink class="nav-link"
+                         href="/LoginIDP">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Log in
+                </NavLink>
+        </NotAuthorized>
+    </AuthorizeView>
  
  ### \_Imports.razor
  
