@@ -6,7 +6,7 @@ This Example solution demonstrates how to:
 * Include the custom user claim in the access token when calling the API.
 * Use one shared authorization policy to secure the navigation link, component route, and API controller method.
 
-# Blazor App Features
+# Features
 This application provides two protected User features that allow the user to view all claims that have been assigned, and to differentiate between the Application user claims set and the API user claims set.
 ### APP Identity 
 Navigation Menu Item: displays the claims of the current User identity for the application.<br/> 
@@ -28,7 +28,7 @@ dotnet new is4aspid -n IdentityServerAspNetIdentity
 ```
 
 ## User with custom claim
-Test users and claims are created in SeedData.cs. <br/>
+Users and claims for testing are created in SeedData.cs. <br/>
 For the Alice user only, add a custom claim of type appUser_claim with value **identity**<br/>
 <br/>
 **SeedData.cs**<br/>
@@ -268,7 +268,6 @@ A client must be configured in Identity Server that has access to the API Resour
  ### Startup.Configure
   **Add services to the request pipeline in correct processing order:
     * Static Files 
-    dd
     * Authentication
     * Authorization
     * Use Endpoints
@@ -298,11 +297,10 @@ A client must be configured in Identity Server that has access to the API Resour
  
  ```
  ## Logging in and out
- On its own, a Blazor component cannot correctly redirect to the IdentityServer Login and Login functions.<br/>
- This is because for signing in and out, the HttpResponse must be modified by adding a cookie - but a pure Blazor component starts the response immediately when it  is rendered and it cannot be changed afterward.<br/>
- An intermediary razor page (or MVC view) must be used to perform the redirect from the Blazor Component to the actual IdentityServer login and logout pages because the Razor Page (or MVC view) is able to manipulate the response correctly before sending it.<br/>
- These pages have a cs file only, with no markup, and each has a single Get method that performs the required actions.
- 
+ A Blazor component cannot correctly redirect to the IdentityServer Login and Login functions on it's own.<br/>
+ For signing in and out, the HttpResponse must be modified by adding a cookie - but a pure Blazor component starts the response immediately when it  is rendered and it cannot be changed afterward.<br/>
+ An intermediary razor page (or MVC view) must be used to perform the redirect from the Blazor Component to the actual IdentityServer login and logout pages because the page is able to manipulate the response correctly before sending it.<br/>
+ These pages have a cs file only, with no cshtml markup, and each has a single Get method that performs the required actions.
  
 ### LoginIDP.cshtml.cs
 The LoginIDP page invokes the ChallengeAsync method on the OIDC scheme, triggering the redirect to IdentityServer for Authentication.
