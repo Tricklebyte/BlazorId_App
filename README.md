@@ -7,7 +7,7 @@ This Example solution demonstrates how to:
 * Use one shared authorization policy to secure the navigation link, component route, and API controller method.
 
 # Features
-This application provides two protected User features that allow the user to view all claims that have been assigned, and to differentiate between the Application user claims set and the API user claims set.
+This application provides two protected features that allow the user to view all claims that have been assigned, and to differentiate between the Application user claims set and the API user claims set.
 ### APP Identity 
 Navigation Menu Item: displays the claims of the current User identity for the application.<br/> 
 ### API Identity 
@@ -269,10 +269,10 @@ A client must be configured in Identity Server that has access to the API Resour
  ```
  ### Startup.Configure
   **Add services to the request pipeline in correct processing order:**
-    * Static Files 
-    * Authentication
-    * Authorization
-    * Use Endpoints
+  * Static Files 
+  * Authentication
+  * Authorization
+  * Use Endpoints
  ```c
  if (env.IsDevelopment())
             {
@@ -301,8 +301,8 @@ A client must be configured in Identity Server that has access to the API Resour
  ## Logging in and out
  A Blazor component cannot correctly redirect to the IdentityServer Login and Login functions on it's own.<br/>
  For signing in and out, the HttpResponse must be modified by adding a cookie - but a pure Blazor component starts the response immediately when it  is rendered and it cannot be changed afterward.<br/>
- An intermediary razor page (or MVC view) must be used to perform the redirect from the Blazor Component to the actual IdentityServer login and logout pages because the page is able to manipulate the response correctly before sending it.<br/>
- These pages have a cs file only, with no cshtml markup, and each has a single Get method that performs the required actions.
+ An intermediary razor page (or MVC view) must be used to interact with the OIDC middleware for logging in and out because the page is able to manipulate the response correctly before sending it.<br/>
+ These pages have a cs file only, with no markup code, and each has a single Get method that performs the required actions.
  
 ### LoginIDP.cshtml.cs
 The LoginIDP page invokes the ChallengeAsync method on the OIDC scheme, triggering the redirect to IdentityServer for Authentication.
@@ -347,20 +347,27 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
    <NavLink class="nav-link" href="/LogoutIDP"> Log out </NavLink>
 ```
 
- ## Using Authentication and Authorization in the UI 
+## Using Authentication and Authorization in the UI 
  
-### CascadingAuthenticationState Component
-Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/><br/>  
-
 ### Authorize attribute
-Razor components support the use of Authorize attributes to trigger authorization checks on the component.<br/>
-Authorization results are cascaded down through all children of CascasdingAuthenticationState.<br/><br/>
+* Razor components support the use of Authorize attributes to trigger authorization checks on the component.<br/>
+* Authorization results are cascaded down through all children of **CascasdingAuthenticationState**.<br/><br/>
 
-**Identity-App.razor**
-The Authorize attribute in the Identity-App component performs an Authorization check when a user attempts to access the component.<br/>
-It uses the same authorization policy as the API, **CanViewIdentity**, located in the shared project. 
+```razor
+@page "/identityapi"
+@attribute [Authorize(Policy = BlazorId_Shared.Policies.CanViewIdentity)]
+```
 
- 
+### CascadingAuthenticationState Component
+* Authentication in SignalR apps is established with the initial connection. 
+* The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/><br/>  
+
+
+
+**Identity-Api.razor**
+* The Authorize attribute in the Identity-App component performs an Authorization check when a user attempts to access the component.
+* It uses the same authorization policy as the API, **CanViewIdentity**, located in the shared project. 
+
 ### AuthorizeRouteView component 
 * Configured in App.razor
 * Controls access to application routes based on the user's authorization status. <br/>
@@ -397,17 +404,14 @@ It uses the same authorization policy as the API, **CanViewIdentity**, located i
 
  ### **AuthorizeView Component**
  * Organizes razor code into two sections, **Authorized** and **NotAuthorized**
- * When authorization succeeds, the code in the **Authorized element** is activated and the markup content generated within that section will be rendered.
-  * When the authorization fails, the code in the **NotAuthorized** section is activated and the razor code within that section will be rendered.
-  * Used in NavMenu.razor to hide navigation links for unauthorized users. 
- 
+ * When authorization succeeds, the code in the **Authorized** section is activated and the markup content generated within that section will be rendered.
+ * When the authorization fails, the code in the **NotAuthorized** section is activated and the razor code within that section will be rendered.
+ * Used in NavMenu.razor to hide navigation links for unauthorized users. 
+ *    The authorized user sees all Links except Login
+ *    The unauthorized user only sees the Login link 
  <br/>
  **NavMenu.razor** <br/>
- 
- * The authorized user sees all Links except Login
- * The unauthorized user only sees the Login link 
 
-**NavMenu.razor**
 ```html
  <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
