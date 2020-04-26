@@ -112,6 +112,9 @@ A client must be configured in Identity Server that has access to the API Resour
  
  # Step 2 Configure the API
  The demo API was created from the standard ASP.NET Core Web API template.
+ ```shell
+ dotnet new web -n Api
+ ```
  ## IdentityController
  Add a new Controller to the project named IdentityController with the following code:
  ```c#
