@@ -384,21 +384,20 @@ Authentication in SignalR apps is established with the initial connection. The C
 </CascadingAuthenticationState>
 ```
 
- ### **AuthorizedViewComponent**
-
- * The AuthorizeRouteView component displays different UI content based on the user's authorization status. 
- * It can be used anywhere that razor markup is used to generate UI content.    
-
+ ### **AuthorizeView Component**
+ * Organizes razor code into two sections, **Authorized** and **NotAuthorized**
+ * When authorization succeeds, the code in the **Authorized element** is activated and the markup content generated within that section will be rendered.
+  * When the authorization fails, the code in the **NotAuthorized** section is activated and the razor code within that section will be rendered.
+  * Used in NavMenu.razor to hide navigation links for unauthorized users. 
  
  <br/>
  **NavMenu.razor** <br/>
  
- * When the authorization succeeds, the code in the **Authorized element** is activated and the markup content generated within that section will be rendered. When the user is authorized, all Links are generated except Login.
- * When the authorization fails, the code in the **NotAuthorized element** is activated and the markup content generated within the NotAuthorized section will be rendered. When the user is not authorized, only the Login link is generated.
  * The authorized user sees all Links except Login
  * The unauthorized user only sees the Login link 
 
 **NavMenu.razor**
+```html
  <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
         <AuthorizeView>
@@ -436,5 +435,5 @@ Authentication in SignalR apps is established with the initial connection. The C
         </AuthorizeView>
     </ul>
 </div>
-
+```
 
