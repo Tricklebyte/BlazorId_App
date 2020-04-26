@@ -153,6 +153,7 @@ A client must be configured in Identity Server that has access to the API Resour
  
  ```
  ## Startup.ConfigureServices
+ Configure 
 
 ```c#
             services.AddControllers()
@@ -171,6 +172,7 @@ A client must be configured in Identity Server that has access to the API Resour
                     // Audience is api Resource name
                     options.Audience = "identityApi";
                 });
+
 
             services.AddCors(options =>
             {
@@ -320,7 +322,7 @@ The LoginIDP page invokes the ChallengeAsync method on the OIDC scheme, triggeri
         }
 ```
 ### LogoutIDP.Razor
-The LogoutIDP page invokes the SignOutAsync method for both Authentication Schemes (Cookies and OIDC)
+**The LogoutIDP page invokes the SignOutAsync method for both Authentication Schemes (Cookies and OIDC)**
 ```c#
 public async Task OnGetAsync()
         {
@@ -330,7 +332,7 @@ public async Task OnGetAsync()
         }
 ```        
 ### BlazorRazor Razor Class Library
-This sample project is using LoginIDP and LogoutIDP razor pages provided by Nuget package [BlazorRazor](https://www.nuget.org/packages/BlazorRazor/)<br/>
+**This sample project is using LoginIDP and LogoutIDP razor pages provided by Nuget package [BlazorRazor](https://www.nuget.org/packages/BlazorRazor/)**<br/>
 
 **BlazorID_App.csproj**<br/>
   ```xml
@@ -348,7 +350,16 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
  ## Using Authentication and Authorization in the UI 
  
 ### CascadingAuthenticationState Component
-Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/><br/>   
+Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/><br/>  
+
+### Authorize attribute
+Razor components support the use of Authorize attributes to trigger authorization checks on the component.<br/>
+Authorization results are cascaded down through all children of CascasdingAuthenticationState.<br/><br/>
+
+**Identity-App.razor**
+The Authorize attribute in the Identity-App component performs an Authorization check when a user attempts to access the component.<br/>
+It uses the same authorization policy as the API, **CanViewIdentity**, located in the shared project. 
+
  
 ### AuthorizeRouteView component 
 * Configured in App.razor
