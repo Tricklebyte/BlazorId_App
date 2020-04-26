@@ -14,8 +14,8 @@ Navigation Menu Item: displays the claims of the current User identity for the a
 Navigation Menu Item: calls a test API, which is protected by IdentityServer. The API will return the user claims it received with the request as JSON. The application then displays those claims to the User. 
 ### Authorization
 The sample solution demonstrates 4 layers of security:
-1. **Application Routing:** Block application route paths for unauthorized Application users 
-2. **Application Navigation:** Hide Navigation Links for unauthorized Application users
+1. **Application Routing:** Block application route paths for unauthorized users 
+2. **Application Navigation:** Hide Navigation Links for unauthorized users
 3. **API User** Deny API access to unauthorized users
 4. **API Client** Deny API access to unauthorized clients
 
