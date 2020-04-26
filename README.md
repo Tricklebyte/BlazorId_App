@@ -209,6 +209,9 @@ A client must be configured in Identity Server that has access to the API Resour
 
  # Step 3 Configure the Blazor Server Application
  The demo Blazor Server App was created from the standard ASP.NET Core Blazor Server template.
+ ```shell
+ dotnet new blazorserver -n BlazorId_App
+ ```
  ## OIDC Settings
  ### Startup.ConfigureServices
  **Configure Authentication (OIDC) and Authorization services**
@@ -294,7 +297,8 @@ A client must be configured in Identity Server that has access to the API Resour
  A Blazor component cannot correctly redirect to the IdentityServer Login and Login functions on its own.<br/><br/>
  For signing in and out, the HttpResponse must be modified by adding a cookie - but a pure Blazor component starts the response immediately when it  is rendered and it cannot be changed afterward.<br/><br/>
  An intermediary razor page (or MVC view) must be used to interact with the OIDC middleware for logging in and out because the page is able to manipulate the response correctly before sending it.<br/><br/>
- These pages have a cs file only, with no markup code, and each has a single Get method that performs the required actions.
+ These pages have a cs file only, with no markup code, and each has a single Get method that performs the required actions. <br/><br/>
+ The real login and logout pages are centrally located in Identity Server.
  
 ### LoginIDP.cshtml.cs
 The LoginIDP page invokes the ChallengeAsync method on the OIDC scheme, triggering the redirect to IdentityServer for Authentication.
