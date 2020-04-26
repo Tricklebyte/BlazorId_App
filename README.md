@@ -348,7 +348,7 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
  ## Using Authentication and Authorization in the UI 
  
 ### CascadingAuthenticationState Component
-Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/>   
+Authentication in SignalR apps is established with the initial connection. The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/><br/>   
  
 ### AuthorizeRouteView component 
 * Configured in App.razor
