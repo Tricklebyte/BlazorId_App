@@ -350,7 +350,7 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
 * Authorization results are cascaded down through all children of **CascasdingAuthenticationState**.<br/><br/>
 
 **Identity-Api.razor**
-* The Authorize attribute in the Identity-App component performs an Authorization check when a user attempts to access the component.
+* The Authorize attribute in the Identity-Api component performs an Authorization check when a user attempts to access the component.
 * It uses the same authorization policy as the API, **CanViewIdentity**, located in the shared project. 
 
 ```razor
