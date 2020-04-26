@@ -402,10 +402,11 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
  * When authorization succeeds, the code in the **Authorized** section is activated and the markup content generated within that section will be rendered.
  * When the authorization fails, the code in the **NotAuthorized** section is activated and the razor code within that section will be rendered.
  * Used in NavMenu.razor to hide navigation links for unauthorized users. 
- *    The authorized user sees all Links except Login
- *    The unauthorized user only sees the Login link 
+
  <br/>
  **NavMenu.razor** <br/>
+ *    The authorized user sees all Links except Login
+ *    The unauthorized user only sees the Login link 
 
 ```html
  <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
