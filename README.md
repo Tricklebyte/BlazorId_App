@@ -15,7 +15,7 @@ Navigation Menu Item: calls a test API, which is protected by IdentityServer. Th
 ### Authorization
 The sample solution demonstrates 4 layers of security:
 1. **Application Routing:** Block application route paths for unauthorized users 
-2. **Application Navigation:** Hide Navigation Links for unauthorized users
+2. **Application Navigation:** Hide navigation links for unauthorized users
 3. **API User** Deny API access to unauthorized users
 4. **API Client** Deny API access to unauthorized clients
 
