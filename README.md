@@ -353,6 +353,10 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
 * Razor components support the use of Authorize attributes to trigger authorization checks on the component.<br/>
 * Authorization results are cascaded down through all children of **CascasdingAuthenticationState**.<br/><br/>
 
+**Identity-Api.razor**
+* The Authorize attribute in the Identity-App component performs an Authorization check when a user attempts to access the component.
+* It uses the same authorization policy as the API, **CanViewIdentity**, located in the shared project. 
+
 ```razor
 @page "/identityapi"
 @attribute [Authorize(Policy = BlazorId_Shared.Policies.CanViewIdentity)]
@@ -362,11 +366,6 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
 * Authentication in SignalR apps is established with the initial connection. 
 * The CascadingAuthenticationState component receives the authentication information upon intial connection and cascades this information to all descendant components.<br/><br/>  
 
-
-
-**Identity-Api.razor**
-* The Authorize attribute in the Identity-App component performs an Authorization check when a user attempts to access the component.
-* It uses the same authorization policy as the API, **CanViewIdentity**, located in the shared project. 
 
 ### AuthorizeRouteView component 
 * Configured in App.razor
