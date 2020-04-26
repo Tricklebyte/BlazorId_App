@@ -330,7 +330,7 @@ public async Task OnGetAsync()
         }
 ```        
 ### BlazorRazor Razor Class Library
-This sample project is using LoginIDP and LogoutIDP provided by Nuget package [BlazorRazor](https://www.nuget.org/packages/BlazorRazor/)<br/>
+This sample project is using LoginIDP and LogoutIDP razor pages provided by Nuget package [BlazorRazor](https://www.nuget.org/packages/BlazorRazor/)<br/>
 
 **BlazorID_App.csproj**<br/>
   ```xml
@@ -389,35 +389,52 @@ Authentication in SignalR apps is established with the initial connection. The C
  * The AuthorizeRouteView component displays different UI content based on the user's authorization status. 
  * It can be used anywhere that razor markup is used to generate UI content.    
 
- * When the authorization succeeds, the code in the **Authorized element** is activated and the markup content generated within that section will be rendered.
- * When the authorization fails, the code in the **NotAuthorized element** is activated and the markup content generated within the NotAuthorized section will be rendered.
  
  <br/>
- **This is a partial example from the Project NavMenu.razor file** <br/>
- * The authorized user only sees the Logout link
- * The unauthorixed user only sees the Login link 
+ **NavMenu.razor** <br/>
+ 
+ * When the authorization succeeds, the code in the **Authorized element** is activated and the markup content generated within that section will be rendered. When the user is authorized, all Links are generated except Login.
+ * When the authorization fails, the code in the **NotAuthorized element** is activated and the markup content generated within the NotAuthorized section will be rendered. When the user is not authorized, only the Login link is generated.
+ * The authorized user sees all Links except Login
+ * The unauthorized user only sees the Login link 
 
 **NavMenu.razor**
-  <AuthorizeView>
-        <Authorized>
-           <li class="nav-item px-3">
-                <NavLink class="nav-link"
-                         href="/LogoutIDP">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Log out
-                    (@context.User.Claims.FirstOrDefault(c => c.Type == "name")?.Value)
-                </NavLink>
-            </li>
-       </Authorized>
+ <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <AuthorizeView>
+            <Authorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link"
+                             href="/" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Home
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="identityapp">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> APP Identity
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="identityapi">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> API Identity
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link"
+                             href="/LogoutIDP">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Log out
+                        (@context.User.Claims.FirstOrDefault(c => c.Type == "name")?.Value)
+                    </NavLink>
+                </li>
+            </Authorized>
             <NotAuthorized>
                 <NavLink class="nav-link"
                          href="/LoginIDP">
                     <span class="oi oi-list-rich" aria-hidden="true"></span> Log in
                 </NavLink>
-        </NotAuthorized>
-    </AuthorizeView>
- 
- ### \_Imports.razor
- 
- ### \_NavMenu.razor
- 
- ### Layer 1 - Block application route paths for unauthorized Application users 
+            </NotAuthorized>
+        </AuthorizeView>
+    </ul>
+</div>
+
+
