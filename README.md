@@ -288,9 +288,9 @@ A client must be configured in Identity Server that has access to the API Resour
  
  ```
  ## Logging in and out
- A Blazor component cannot correctly redirect to the IdentityServer Login and Login functions on it's own.<br/>
- For signing in and out, the HttpResponse must be modified by adding a cookie - but a pure Blazor component starts the response immediately when it  is rendered and it cannot be changed afterward.<br/>
- An intermediary razor page (or MVC view) must be used to interact with the OIDC middleware for logging in and out because the page is able to manipulate the response correctly before sending it.<br/>
+ A Blazor component cannot correctly redirect to the IdentityServer Login and Login functions on its own.<br/><br/>
+ For signing in and out, the HttpResponse must be modified by adding a cookie - but a pure Blazor component starts the response immediately when it  is rendered and it cannot be changed afterward.<br/><br/>
+ An intermediary razor page (or MVC view) must be used to interact with the OIDC middleware for logging in and out because the page is able to manipulate the response correctly before sending it.<br/><br/>
  These pages have a cs file only, with no markup code, and each has a single Get method that performs the required actions.
  
 ### LoginIDP.cshtml.cs
