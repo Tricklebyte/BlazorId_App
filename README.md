@@ -173,18 +173,6 @@ A client must be configured in Identity Server that has access to the API Resour
                     options.Audience = "identityApi";
                 });
 
-
-            services.AddCors(options =>
-            {
-                // this defines a CORS policy called "default"
-                options.AddPolicy("default", policy =>
-                {
-                    policy.WithOrigins("https://localhost:44321")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
-            });
-
             services.AddAuthorization(authorizationOptions =>
             {
                 // add authorization policy from Shared project 
@@ -202,11 +190,12 @@ A client must be configured in Identity Server that has access to the API Resour
  public void Configure(IApplicationBuilder app)
         {
             app.UseRouting();
-            app.UseCors("default");
+  
             // add authentication first, followed by authorization
             //     these two should come after app.UseRouting but before app.UseEndpoints
             app.UseAuthentication();
             app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
