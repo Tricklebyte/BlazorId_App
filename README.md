@@ -375,7 +375,7 @@ After referencing this nuget package, simply direct logins to "/LoginIDP" and lo
 
 **App.razor**<br/>
 * The AuthorizeRouteView element is wrapped in the **CascadingAuthenticationState** element, and thus can access the authentication and authorization status data.
-* When the authorization fails, the code in the **NotAuthorized** element is activated a denial message is returned to the caller instead of the page.
+* When the authorization fails, the code in the **NotAuthorized** element is activated and a denial message is returned to the caller instead of the page.
 * When the authorization succeeds, the code in the **NotAuthorized** element is **not** activated and the requeste is returned as usual.<br/>
 
 ```xml
