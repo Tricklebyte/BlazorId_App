@@ -264,10 +264,11 @@ A client must be configured in Identity Server that has access to the API Resour
  ```
  ### Startup.Configure
   **Add services to the request pipeline in correct processing order:**
-  * Static Files 
-  * Authentication
-  * Authorization
-  * Use Endpoints
+  1. UseStaticFiles 
+  2. UseRouting
+  3. UseAuthentication
+  4. UseAuthorization
+  5. UseEndpoints
  ```c
  if (env.IsDevelopment())
             {
