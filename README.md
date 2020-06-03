@@ -156,8 +156,6 @@ A client must be configured in Identity Server that has access to the API Resour
  
  ```
  ## Startup.ConfigureServices
- Configure 
-
 ```c#
             services.AddControllers()
                 .AddNewtonsoftJson();
